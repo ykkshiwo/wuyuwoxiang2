@@ -4,10 +4,6 @@ const app = getApp()
 
 Page({
   data: {
-    motto: 'Hello World',
-    // newMyChinaProvices: ["丽水市","嘉兴市","金华市","湖州市","舟山市","宁波市","杭州市","温州市","衢州市","绍兴市","台州市"],
-    yuliu_w: 200,
-    yuliu_h: 200
   },
   //事件处理函数
   bindViewTap: function() {
@@ -33,35 +29,62 @@ Page({
       },
     })
 
-    var m = require("../../data/provices/zhejiang.js")
+    var m = require("../../data/provices/shan1xi.js")
     var map = m.proviceCoor
-    var dijiShi = m.dijiShi
     var dingWei = m.dingWei
     this.setData({
-      dijiShi: dijiShi,
       dingWei: dingWei,
       map: map,
     })
-    console.log(dijiShi, dingWei)
+    // console.log(dijiShi, dingWei)
   },
 
   onReady: function(){
     var context = wx.createCanvasContext('firstCanvas')
-    for (var j = this.data.dijiShi.length - 1; j > -1; j--) {
-      context.beginPath()
-      context.setLineWidth(1)
-      context.setStrokeStyle('red')
-      var p = this.data.dijiShi[j]
-      console.log(p)
-      var provice = this.data.map[p][0]
-      context.moveTo(this.longToZB(provice[0][0], this.data.s_width, this.data.dingWei['long_max'], this.data.dingWei['long_min']), this.latToZB(provice[0][1], this.data.s_height, this.data.dingWei['lat_max'], this.data.dingWei['lat_min']))
-      for (var i = 1; i < provice.length; i++) {
-        context.lineTo(this.longToZB(provice[i][0], this.data.s_width, this.data.dingWei['long_max'], this.data.dingWei['long_min']), this.latToZB(provice[i][1], this.data.s_height, this.data.dingWei['lat_max'], this.data.dingWei['lat_min']))
+    // for (var j = this.data.dijiShi.length - 1; j > -1; j--) {
+    //   context.beginPath()
+    //   context.setLineWidth(1)
+    //   context.setStrokeStyle('red')
+    //   var p = this.data.dijiShi[j]
+    //   console.log(p)
+    //   var provice = this.data.map[p][0]
+    //   context.moveTo(this.longToZB(provice[0][0], this.data.s_width, this.data.dingWei['long_max'], this.data.dingWei['long_min']), this.latToZB(provice[0][1], this.data.s_height, this.data.dingWei['lat_max'], this.data.dingWei['lat_min']))
+    //   for (var i = 1; i < provice.length; i++) {
+    //     context.lineTo(this.longToZB(provice[i][0], this.data.s_width, this.data.dingWei['long_max'], this.data.dingWei['long_min']), this.latToZB(provice[i][1], this.data.s_height, this.data.dingWei['lat_max'], this.data.dingWei['lat_min']))
+    //   }
+    //   context.closePath()
+    //   context.fill()
+    //   context.stroke()
+    // }
+    for (var key in this.data.map) {
+      console.log(key)
+      // context.beginPath()
+      // context.setLineWidth(1)
+      // context.setStrokeStyle("red")
+      //console.log("key: ", key)
+      // if (this.data.provices.indexOf(key) > -1) {
+      //   context.setFillStyle('#CDC9C9')
+      // }
+      // else{
+        context.setFillStyle('#F0F0F0')
+      // }
+      var djs = this.data.map[key]
+      console.log(djs.length)
+      for (var s=0; s<djs.length; s++){
+        context.beginPath()
+        context.setLineWidth(1)
+        context.setStrokeStyle("red")
+        var djs_q = djs[s]
+        context.moveTo(this.longToZB(djs_q[0][0], this.data.s_width, this.data.dingWei['long_max'], this.data.dingWei['long_min']), this.latToZB(djs_q[0][1], this.data.s_height, this.data.dingWei['lat_max'], this.data.dingWei['lat_min']))
+        for (var i = 1; i < djs_q.length; i++) {
+          context.lineTo(this.longToZB(djs_q[i][0], this.data.s_width, this.data.dingWei['long_max'], this.data.dingWei['long_min']), this.latToZB(djs_q[i][1], this.data.s_height, this.data.dingWei['lat_max'], this.data.dingWei['lat_min']))
+        }
+        context.closePath()
+        context.fill()
+        context.stroke()
       }
-      context.closePath()
-      context.fill()
-      context.stroke()
     }
+
     context.draw()
 
   },
