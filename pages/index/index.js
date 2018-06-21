@@ -7,9 +7,6 @@ var map =m.zhejiang
 Page({
   data: {
     motto: 'Hello World',
-    userInfo: {},
-    hasUserInfo: false,
-    canIUse: wx.canIUse('button.open-type.getUserInfo'),
     newMyChinaProvices: ["丽水市","嘉兴市","金华市","湖州市","舟山市","宁波市","杭州市","温州市","衢州市","绍兴市","台州市"],
     yuliu_w: 200,
     yuliu_h: 200
@@ -62,14 +59,13 @@ Page({
 
   },
 
-  longToZB: function (long, sw) {
-    var r = 0.7 * (long - 118.081075) * sw / (122.124044 - 118.081075) + 118.081075 - (118.081075 - this.data.yuliu_w)
+  longToZB: function (long, sw, long_max, long_min) {
+    var r = 0.7 * (long - long_min) * sw / (long_max - long_min) + long_min - (long_min - this.data.yuliu_w)
     return r
   },
 
-  latToZB: function (lat, sh) {
-    // var r = sh * 0.7 * (30.977602 - lat) * 0.18 + this.data.yuliu_h
-    var r = sh * (0.05 + 0) - ((lat - 30.977602) * sh * 0.5) / ( 30.977602 - 27.196011 )
+  latToZB: function (lat, sh, lat_max, lat_min) {
+    var r = sh * 0.05 - ( ( lat - lat_max ) * sh * 0.5) / ( lat_max- lat_min )
     return r
   },
 
