@@ -22,7 +22,7 @@ Page({
         console.log(res.screenHeight, res.screenWidth)
         var s_width = res.screenWidth
         var s_height = res.screenHeight
-        var yuliu_w = res.screenWidth * 0.05
+        var yuliu_w = res.screenWidth * 0.1
         var yuliu_h = res.screenHeight * 0.08
         that.setData({
           yuliu_w: yuliu_w,
@@ -33,7 +33,7 @@ Page({
       },
     })
 
-    var m = require("../../data/provices/anhui.js")
+    var m = require("../../data/provices/zhejiang.js")
     var map = m.proviceCoor
     var dijiShi = m.dijiShi
     var dingWei = m.dingWei
@@ -67,7 +67,7 @@ Page({
   },
 
   longToZB: function (long, sw, long_max, long_min) {
-    var r = 0.7 * (long - long_min) * sw / (long_max - long_min) + this.data.yuliu_w
+    var r = 0.8 * (long - long_min) * sw / (long_max - long_min) + this.data.yuliu_w
     return r
   },
 
