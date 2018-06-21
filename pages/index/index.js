@@ -37,8 +37,10 @@ Page({
     var map = m.zhejiang
     var dijiShi = m.dijiShi
     var dingWei = m.dingWei
-    this.data.SetData({
-      dijiShi:
+    this.setData({
+      dijiShi: dijiShi,
+      dingWei: dingWei,
+      map: map,
     })
     console.log(dijiShi, dingWei)
   },
@@ -50,13 +52,13 @@ Page({
       context.setLineWidth(1)
       context.setStrokeStyle('red')
       // console.log(this.data.newMyChinaProvices[j][0])
-      var p = this.data.newMyChinaProvices[j]
+      var p = this.data.dijiShi[j]
       console.log(p)
-      var provice = map[p][0]
+      var provice = this.data.map[p][0]
       console.log(provice)
-      context.moveTo(this.longToZB(provice[0][0], this.data.s_width), this.latToZB(provice[0][1], this.data.s_height))
+      context.moveTo(this.longToZB(provice[0][0], this.data.s_width, this.data.dingWei['long_max'], this.data.dingWei['long_min']), this.latToZB(provice[0][1], this.data.s_height, this.data.dingWei['lat_max'], this.data.dingWei['lat_min']))
       for (var i = 1; i < provice.length; i++) {
-        context.lineTo(this.longToZB(provice[i][0], this.data.s_width), this.latToZB(provice[i][1], this.data.s_height))
+        context.lineTo(this.longToZB(provice[i][0], this.data.s_width, this.data.dingWei['long_max'], this.data.dingWei['long_min']), this.latToZB(provice[i][1], this.data.s_height, this.data.dingWei['lat_max'], this.data.dingWei['lat_min']))
       }
       context.closePath()
       context.fill()
