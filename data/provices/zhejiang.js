@@ -2,7 +2,7 @@ const zhejiang = { "丽水市": [[[118.6963, 28.3118], [118.6963, 28.3228], [118
 
 const dijiShi = ["丽水市", "嘉兴市", "金华市", "湖州市", "舟山市", "宁波市", "杭州市", "温州市", "衢州市", "绍兴市", "台州市"]
 
-const dingWei = { long_max: 30.675708, long_min: 29.075368,lat_max: 31.165803, lat_min: 27.215549}
+const dingWei = { long_max: 122.124044, long_min: 118.081075,lat_max: 31.165803, lat_min: 27.215549}
 
 
 module.exports = {
