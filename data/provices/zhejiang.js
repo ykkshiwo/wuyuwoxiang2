@@ -6,7 +6,7 @@ const dingWei = { long_max: 122.124044, long_min: 118.081075,lat_max: 31.165803,
 
 
 module.exports = {
-  zhejiang: zhejiang,
+  proviceCoor: zhejiang,
   dingWei: dingWei,
   dijiShi: dijiShi,
 }

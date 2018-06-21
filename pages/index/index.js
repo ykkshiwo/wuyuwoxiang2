@@ -5,7 +5,7 @@ const app = getApp()
 Page({
   data: {
     motto: 'Hello World',
-    newMyChinaProvices: ["丽水市","嘉兴市","金华市","湖州市","舟山市","宁波市","杭州市","温州市","衢州市","绍兴市","台州市"],
+    // newMyChinaProvices: ["丽水市","嘉兴市","金华市","湖州市","舟山市","宁波市","杭州市","温州市","衢州市","绍兴市","台州市"],
     yuliu_w: 200,
     yuliu_h: 200
   },
@@ -33,8 +33,8 @@ Page({
       },
     })
 
-    var m = require("../../data/provices/zhejiang.js")
-    var map = m.zhejiang
+    var m = require("../../data/provices/anhui.js")
+    var map = m.proviceCoor
     var dijiShi = m.dijiShi
     var dingWei = m.dingWei
     this.setData({
@@ -47,15 +47,13 @@ Page({
 
   onReady: function(){
     var context = wx.createCanvasContext('firstCanvas')
-    for (var j = 10; j > -1; j--) {
+    for (var j = this.data.dijiShi.length - 1; j > -1; j--) {
       context.beginPath()
       context.setLineWidth(1)
       context.setStrokeStyle('red')
-      // console.log(this.data.newMyChinaProvices[j][0])
       var p = this.data.dijiShi[j]
       console.log(p)
       var provice = this.data.map[p][0]
-      // console.log(console.log(this.longToZB(provice[0][0], this.data.s_width, this.data.dingWei['long_max'], this.data.dingWei['long_min'])))
       context.moveTo(this.longToZB(provice[0][0], this.data.s_width, this.data.dingWei['long_max'], this.data.dingWei['long_min']), this.latToZB(provice[0][1], this.data.s_height, this.data.dingWei['lat_max'], this.data.dingWei['lat_min']))
       for (var i = 1; i < provice.length; i++) {
         context.lineTo(this.longToZB(provice[i][0], this.data.s_width, this.data.dingWei['long_max'], this.data.dingWei['long_min']), this.latToZB(provice[i][1], this.data.s_height, this.data.dingWei['lat_max'], this.data.dingWei['lat_min']))
