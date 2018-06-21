@@ -1,0 +1,1 @@
+<canvas style='width: {{ s_width }}px; height: {{ s_height }}px;' canvas-id="firstCanvas"></canvas>
