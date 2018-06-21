@@ -29,7 +29,7 @@ Page({
       },
     })
 
-    var m = require("../../data/provices/shan1xi.js")
+    var m = require("../../data/provices/guangxi.js")
     var map = m.proviceCoor
     var dingWei = m.dingWei
     this.setData({
