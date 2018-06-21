@@ -1,8 +1,6 @@
 //index.js
 //获取应用实例
 const app = getApp()
-var m = require("../../data/provices/zhejiang.js")
-var map =m.zhejiang
 
 Page({
   data: {
@@ -34,6 +32,15 @@ Page({
         })
       },
     })
+
+    var m = require("../../data/provices/zhejiang.js")
+    var map = m.zhejiang
+    var dijiShi = m.dijiShi
+    var dingWei = m.dingWei
+    this.data.SetData({
+      dijiShi:
+    })
+    console.log(dijiShi, dingWei)
   },
 
   onReady: function(){
