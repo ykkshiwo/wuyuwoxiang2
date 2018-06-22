@@ -29,7 +29,7 @@ Page({
       },
     })
 
-    var m = require("../../data/provices/tianjin.js")
+    var m = require("../../data/provices/taiwan.js")
     var map = m.proviceCoor
     var dingWei = m.dingWei
     this.setData({
