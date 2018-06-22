@@ -18,23 +18,21 @@ Page({
         console.log(res.screenHeight, res.screenWidth)
         var s_width = res.screenWidth
         var s_height = res.screenHeight
-        var yuliu_w = res.screenWidth * 0.1
-        var yuliu_h = res.screenHeight * 0.08
         that.setData({
-          yuliu_w: yuliu_w,
-          yuliu_h: yuliu_h,
           s_width: s_width,
           s_height: s_height
         })
       },
     })
 
-    var m = require("../../data/provices/taiwan.js")
+    var m = require("../../data/provices/jiangsu.js")
     var map = m.proviceCoor
     var dingWei = m.dingWei
+    var map_h = 0.9 * this.data.s_width * ( dingWei['lat_max'] - dingWei['lat_min'] ) / ( dingWei['long_max'] - dingWei['long_min'] )
     this.setData({
       dingWei: dingWei,
       map: map,
+      map_h: map_h
     })
     // console.log(dijiShi, dingWei)
   },
@@ -90,12 +88,13 @@ Page({
   },
 
   longToZB: function (long, sw, long_max, long_min) {
-    var r = 0.8 * (long - long_min) * sw / (long_max - long_min) + this.data.yuliu_w
+    var r = 0.9 * (long - long_min) * sw / (long_max - long_min) + sw*0.05
     return r
   },
 
   latToZB: function (lat, sh, lat_max, lat_min) {
-    var r = sh * 0.05 - ( ( lat - lat_max ) * sh * 0.5) / ( lat_max- lat_min )
+    // var r = sh * 0.05 - ( ( lat - lat_max ) * sh * 0.5) / ( lat_max- lat_min )
+    var r = sh * 0.05 - ((lat - lat_max) * this.data.map_h) / (lat_max - lat_min)
     return r
   },
 
