@@ -1,0 +1,40 @@
+<view class='provices_sj' wx:for="{{ chinaProvices }}">
+  <view class='provice_sj' id="{{ item }}" catchtap='chooseP'>
+    {{ item }}
+  </view>
+</view>
+
+
+<view wx:if="{{ display }}" class='citys_xuanzhe'>
+<image catchtap='confirm' src='../../images/close.png' class='close' mode='aspectFit'></image>
+  <view class='provices_citys'>
+    <scroll-view class='provices' scroll-y='true'>
+      <view wx:for="{{dijishis}}">
+        <view id="{{ item }}" class='provice' catchtap='chooseD'>{{ item }}</view>
+      </view> 
+    </scroll-view>
+
+    
+    <scroll-view class='citys_' scroll-y='true'>
+      <view wx:for="{{xianjishis}}">
+        <view id="{{ item }}" class='test_citys' catchtap='chooseX'>{{ item }}</view>
+      </view>
+    </scroll-view>
+  </view>
+  <view class='have_choose_citys_'>
+    <scroll-view class='have_choose_citys' scroll-y='true'>
+  {{ xiangjishisChoosed }}
+  </scroll-view>
+    <scroll-view class='have_choose_provices' scroll-y='true'>
+  {{ disallProvice }}
+  </scroll-view>
+  </view>
+  <view class='button_clear_ok'>
+    <view class='clear' catchtap='clear'>
+        重选
+    </view> 
+    <view class='confirm'  catchtap='produce'>
+        提交
+    </view>
+  </view>
+</view>
