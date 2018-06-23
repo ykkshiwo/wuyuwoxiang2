@@ -31,12 +31,12 @@ Page({
       dijishis_xianjishis: pdx[provice],
       provice: provice,
     })
-    try{
-      var m = require("../../data/provices/" + provice + ".js")
-    }
-    catch(err){
-      console.log(err)
-    }
+    // try{
+    //   var m = require("../../data/provices/" + provice + ".js")
+    // }
+    // catch(err){
+    //   console.log(err)
+    // }
   },
 
   chooseD: function(event){
@@ -51,7 +51,7 @@ Page({
   chooseX: function(event){
     var xianjishi = event.currentTarget.id;
     console.log(xianjishi);
-    this.data.xiangjishisChoosed.unshift(xianjishi)
+    this.data.xiangjishisChoosed.push(xianjishi)
     this.setData({
       xiangjishisChoosed: this.unique(this.data.xiangjishisChoosed)
     })
@@ -75,7 +75,17 @@ Page({
   },
 
   produce: function(){
-
+    // console.log(this.data.provice)
+    var p = this.data.provice
+    var xiangjishisChoosed_jwd = this.data.xiangjishisChoosed.map( function (v) { var c_z = cjwd[p][v]; return c_z } )
+    // console.log(xiangjishisChoosed_jwd)
+    wx.setStorageSync('xiangjishisChoosed_jwd', xiangjishisChoosed_jwd)
+    wx.setStorageSync('xiangjishisChoosed', this.data.xiangjishisChoosed)
+    wx.navigateTo({
+      url: "/pages/index/index?provice=" + this.data.provice,
+      success: function () {
+      }
+    })
   },
 
   /**

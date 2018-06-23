@@ -4,6 +4,7 @@ const app = getApp()
 
 Page({
   data: {
+    colors: ['#FFFF00', '#FF0000', '#C0FF3E', '#00FFFF', '#00EE00', '#FFD700', '#0000EE', '#8A2BE2', '#9AFF9A', '#B452CD'],
   },
   //事件处理函数
   bindViewTap: function() {
@@ -11,7 +12,9 @@ Page({
       url: '../logs/logs'
     })
   },
-  onLoad: function () {
+
+  onLoad: function (options) {
+
     var that = this
     wx.getSystemInfo({
       success: function (res) {
@@ -25,7 +28,13 @@ Page({
       },
     })
 
-    var m = require("../../data/provices/jiangsu.js")
+    try{
+      var m = require("../../data/provices/" + options.provice + ".js")
+    }
+    catch(err){
+      console.log(err)
+    }
+
     var map = m.proviceCoor
     var dingWei = m.dingWei
     var map_h = 0.9 * this.data.s_width * ( dingWei['lat_max'] - dingWei['lat_min'] ) / ( dingWei['long_max'] - dingWei['long_min'] )
@@ -35,25 +44,20 @@ Page({
       map_h: map_h
     })
     // console.log(dijiShi, dingWei)
+
+    this.setData({
+      home_long: options.home_long,
+      home_lat: options.home_lat,
+      zuobiao: wx.getStorageSync('xiangjishisChoosed_jwd'),
+      citys: wx.getStorageSync('xiangjishisChoosed'),
+      To: options.To,
+    })
+
   },
 
   onReady: function(){
     var context = wx.createCanvasContext('firstCanvas')
-    // for (var j = this.data.dijiShi.length - 1; j > -1; j--) {
-    //   context.beginPath()
-    //   context.setLineWidth(1)
-    //   context.setStrokeStyle('red')
-    //   var p = this.data.dijiShi[j]
-    //   console.log(p)
-    //   var provice = this.data.map[p][0]
-    //   context.moveTo(this.longToZB(provice[0][0], this.data.s_width, this.data.dingWei['long_max'], this.data.dingWei['long_min']), this.latToZB(provice[0][1], this.data.s_height, this.data.dingWei['lat_max'], this.data.dingWei['lat_min']))
-    //   for (var i = 1; i < provice.length; i++) {
-    //     context.lineTo(this.longToZB(provice[i][0], this.data.s_width, this.data.dingWei['long_max'], this.data.dingWei['long_min']), this.latToZB(provice[i][1], this.data.s_height, this.data.dingWei['lat_max'], this.data.dingWei['lat_min']))
-    //   }
-    //   context.closePath()
-    //   context.fill()
-    //   context.stroke()
-    // }
+
     for (var key in this.data.map) {
       console.log(key)
       // context.beginPath()
@@ -71,7 +75,7 @@ Page({
       for (var s=0; s<djs.length; s++){
         context.beginPath()
         context.setLineWidth(1)
-        context.setStrokeStyle("red")
+        context.setStrokeStyle("white")
         var djs_q = djs[s]
         context.moveTo(this.longToZB(djs_q[0][0], this.data.s_width, this.data.dingWei['long_max'], this.data.dingWei['long_min']), this.latToZB(djs_q[0][1], this.data.s_height, this.data.dingWei['lat_max'], this.data.dingWei['lat_min']))
         for (var i = 1; i < djs_q.length; i++) {
@@ -82,6 +86,45 @@ Page({
         context.stroke()
       }
     }
+
+    console.log("我的彩色旅途")
+    // var allDistance = d.allDistance(this.data.zuobiao)
+    // console.log("总里程为：", allDistance)
+
+    context.beginPath()
+    context.setStrokeStyle("red")
+    context.setLineWidth(1)
+    var zuobiao = this.data.zuobiao
+    var ok = zuobiao.unshift([this.data.home_long, this.data.home_lat])
+
+    for (var i = 0; i < ok - 1; i++) {
+      context.beginPath()
+      context.moveTo(this.longToZB(zuobiao[i][0], this.data.s_width, this.data.dingWei['long_max'], this.data.dingWei['long_min']), this.latToZB(zuobiao[i][1], this.data.s_height, this.data.dingWei['lat_max'], this.data.dingWei['lat_min']))
+      context.lineTo(this.longToZB(zuobiao[i + 1][0], this.data.s_width, this.data.dingWei['long_max'], this.data.dingWei['long_min']), this.latToZB(zuobiao[i + 1][1], this.data.s_height, this.data.dingWei['lat_max'], this.data.dingWei['lat_min']))
+      context.setStrokeStyle(this.data.colors[parseInt(10 * Math.random())])
+      context.stroke()
+    }
+
+    for (var i = 0; i < ok; i++) {
+      context.beginPath()
+      context.arc(this.longToZB(zuobiao[i][0], this.data.s_width, this.data.dingWei['long_max'], this.data.dingWei['long_min']), this.latToZB(zuobiao[i][1], this.data.s_height, this.data.dingWei['lat_max'], this.data.dingWei['lat_min']), 2, 0, 2 * Math.PI)
+      context.setFillStyle(this.data.colors[parseInt(10 * Math.random())])
+      context.fill()
+    }
+
+    context.beginPath()
+    context.setFontSize(16)
+    context.setFillStyle(this.data.to_color)
+    context.fillText(this.data.To + ": " + "( " + '0' + "公里 )", 0.05 * this.data.s_width, 0.52 * this.data.s_height)
+
+    //端午定制版
+    // context.fillText("不屈的流放" + ": ", 0.05 * this.data.s_width, 0.52 * this.data.s_height)
+
+    context.beginPath()
+    // this.writeCityName(context)
+    context.stroke()
+
+
 
     context.draw()
 
