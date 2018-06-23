@@ -31,6 +31,18 @@ Page({
       dijishis_xianjishis: pdx[provice],
       provice: provice,
     })
+    var that = this
+    wx.chooseLocation({
+      success: function (res) {
+        console.log(res)
+        var long_ = res.longitude
+        var lat_ = res.latitude
+        that.setData({
+          home_lat: lat_,
+          home_long: long_,
+        })
+      }
+    })
     // try{
     //   var m = require("../../data/provices/" + provice + ".js")
     // }
@@ -82,7 +94,9 @@ Page({
     wx.setStorageSync('xiangjishisChoosed_jwd', xiangjishisChoosed_jwd)
     wx.setStorageSync('xiangjishisChoosed', this.data.xiangjishisChoosed)
     wx.navigateTo({
-      url: "/pages/index/index?provice=" + this.data.provice,
+      url: "/pages/index/index?provice=" + this.data.provice +
+      "&home_long=" + this.data.home_long +
+      "&home_lat=" + this.data.home_lat,
       success: function () {
       }
     })
